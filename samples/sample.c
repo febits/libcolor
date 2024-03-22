@@ -89,21 +89,21 @@ int main(void) {
   printf(OFF "\nText Effects:\n");
 
   s.effects = BOLD;
-  printfc(&s, MSG);
+  printfc(&s, "\tBOLD\t" MSG);
   s.effects = DIM;
-  printfc(&s, MSG);
+  printfc(&s, "\tDIM\t" MSG);
   s.effects = ITALIC;
-  printfc(&s, MSG);
+  printfc(&s, "\tITALIC\t" MSG);
   s.effects = UNDERLINE;
-  printfc(&s, MSG);
+  printfc(&s, "\tUNDERLINE\t" MSG);
   s.effects = BLINKING;
-  printfc(&s, MSG);
+  printfc(&s, "\tBLINKING\t" MSG);
   s.effects = REVERSE;
-  printfc(&s, MSG);
+  printfc(&s, "\tREVERSE\t" MSG);
   s.effects = HIDDEN;
-  printfc(&s, MSG);
+  printfc(&s, "\tHIDDEN\t" MSG);
   s.effects = CROSSOUT;
-  printfc(&s, MSG);
+  printfc(&s, "\tCROSSOUT\t" MSG);
 
   s.foreground = BRIGHT_YELLOW;
   s.background = DEFAULT(BG);
