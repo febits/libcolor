@@ -17,6 +17,7 @@ SAMPLE=samples/sample
 .PHONY: default samples run_samples install uninstall clean
 
 default: $(LIB)
+all: $(LIB) samples
 
 $(LIB): $(SRC)
 	mkdir -p $(BUILDDIR)
