@@ -3,6 +3,12 @@
 
 #include <stdint.h>
 
+#define ESC "\x1b"
+#define SEPARATOR "["
+#define TERMINATOR "m"
+#define RESET_VALUE "0"
+#define OFF ESC SEPARATOR RESET_VALUE TERMINATOR
+
 #define FGDEFAULT 39
 #define BGDEFAULT 49
 

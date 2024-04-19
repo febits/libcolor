@@ -4,12 +4,6 @@
 
 #include "color.h"
 
-#define ESC "\x1b"
-#define SEPARATOR "["
-#define TERMINATOR "m"
-#define RESET_VALUE "0"
-#define OFF ESC SEPARATOR RESET_VALUE TERMINATOR
-
 #define BGDIFF 10
 #define GETBIT(B, P) (((B) >> (P)) & 1)
 
