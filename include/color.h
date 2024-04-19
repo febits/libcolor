@@ -3,18 +3,10 @@
 
 #include <stdint.h>
 
-#define ESC "\x1b"
-#define SEPARATOR "["
-#define TERMINATOR "m"
-#define RESET_VALUE "0"
-#define OFF ESC SEPARATOR RESET_VALUE TERMINATOR
-
 #define FGDEFAULT 39
 #define BGDEFAULT 49
-#define BGDIFF 10
 
 #define DEFAULT(type) ((type) == FG ? FGDEFAULT : BGDEFAULT)
-#define GETBIT(B, P) (((B) >> (P)) & 1)
 
 #define BOLD (1 << 0)
 #define DIM (1 << 1)
@@ -26,18 +18,6 @@
 #define CROSSOUT (1 << 7)
 
 enum default_type { FG, BG };
-
-enum effects {
-  _BOLD,      // \x1b[1m
-  _DIM,       // \x1b[2m
-  _ITALIC,    // \x1b[3m
-  _UNDERLINE, // \x1b[4m
-  _BLINKING,  // \x1b[5m
-  // NONE
-  _REVERSE,  // \x1b[7m
-  _HIDDEN,   // \x1b[8m
-  _CROSSOUT, // \x1b[9m
-};
 
 enum colors {
   BLACK = 30,

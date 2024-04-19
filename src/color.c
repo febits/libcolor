@@ -4,6 +4,27 @@
 
 #include "color.h"
 
+#define ESC "\x1b"
+#define SEPARATOR "["
+#define TERMINATOR "m"
+#define RESET_VALUE "0"
+#define OFF ESC SEPARATOR RESET_VALUE TERMINATOR
+
+#define BGDIFF 10
+#define GETBIT(B, P) (((B) >> (P)) & 1)
+
+enum effects {
+  _BOLD,      // \x1b[1m
+  _DIM,       // \x1b[2m
+  _ITALIC,    // \x1b[3m
+  _UNDERLINE, // \x1b[4m
+  _BLINKING,  // \x1b[5m
+  // NONE
+  _REVERSE,  // \x1b[7m
+  _HIDDEN,   // \x1b[8m
+  _CROSSOUT, // \x1b[9m
+};
+
 static int apply_color(struct style *s) {
   int written_bytes = 0;
   written_bytes += printf(ESC SEPARATOR "%u" TERMINATOR, s->foreground);

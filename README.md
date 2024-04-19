@@ -1,4 +1,5 @@
-# Libcolor
+# libcolor
+
 libcolor is meant to be a library that gives an easy-to-use interface for printing different colors and styles on terminal.
 
 Supported:
