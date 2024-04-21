@@ -27,12 +27,18 @@ sudo make install
 
 After the installation, you'll be able to access the `"color.h"` that lives in `/usr/include`. Remember to link your final executable binary with the libcolor using `-lcolor`.
 
-The main header file `color.h` exposes one single function: `printfc` (print with format and colors)
+The main header file `color.h` exposes two functions: `printfc` and `fprintfc`
 ```c
-int printfc(struct style *s, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
+int printfc(struct style *s, const char *fmt, ...)
+    __attribute__((format(printf, 2, 3)));
 ```
 
-The `printfc` takes one especial argument: `struct style`
+```c
+int fprintfc(FILE *stream, struct style *s, const char *fmt, ...)
+    __attribute__((format(printf, 3, 4)));
+```
+
+The `printfc` and `fprintfc` takes one especial argument: `struct style`
 ```c
 typedef struct style {
   uint8_t foreground;
@@ -40,6 +46,8 @@ typedef struct style {
   uint8_t effects;
 } Style;
 ```
+
+The `fprintfc` also takes the specific `STREAM` which is a `FILE *`.
 
 Basically, all you need is fill up the members of that struct and pass through to `printfc`.
 
@@ -87,6 +95,23 @@ int main() {
     return 0;
 }
 
+```
+
+With `fprintfc`:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <color.h>
+
+int main() {
+    struct style s = {YELLOW, DEFAULT(BG), BOLD | ITALIC | CROSSOUT};
+    FILE *f = fopen("/tmp/libcolor.tst", "w");
+
+    fprintfc(f, &s, "POTATO BANANA %s\n", "ORANGE");
+
+    return 0;
+}
 ```
 
 ## Samples
