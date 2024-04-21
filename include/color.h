@@ -2,6 +2,7 @@
 #define COLOR_H
 
 #include <stdint.h>
+#include <stdio.h>
 
 #define ESC "\x1b"
 #define SEPARATOR "["
@@ -52,5 +53,8 @@ typedef struct style {
 
 int printfc(struct style *s, const char *fmt, ...)
     __attribute__((format(printf, 2, 3)));
+
+int fprintfc(FILE *stream, struct style *s, const char *fmt, ...)
+    __attribute__((format(printf, 3, 4)));
 
 #endif

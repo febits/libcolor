@@ -166,5 +166,17 @@ int main(void) {
 
   printfc(&s, MSG);
 
+  s.foreground = BRIGHT_RED;
+  s.background = DEFAULT(BG);
+  s.effects = UNDERLINE | BOLD | BLINKING;
+
+  FILE *f = fopen("/tmp/libcolor.tst", "w");
+
+  fprintfc(f, &s, "Testing on STREAM...\n");
+
+  s.background = BLACK;
+  s.effects = DIM;
+  fprintfc(f, &s, "Testing on STREAM 2...\n");
+
   return EXIT_SUCCESS;
 }
