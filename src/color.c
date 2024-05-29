@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "color.h"
+#include "types.h"
 
 #define BGDIFF 10
 #define GETBIT(B, P) (((B) >> (P)) & 1)
@@ -19,58 +20,55 @@ enum effects {
   _CROSSOUT, // \x1b[9m
 };
 
-static int apply_color(FILE *stream, struct style *s) {
-  int written_bytes = 0;
-  written_bytes += fprintf(stream ? stream : stdout,
-                           ESC SEPARATOR "%u" TERMINATOR, s->foreground);
-  written_bytes +=
-      fprintf(stream ? stream : stdout, ESC SEPARATOR "%u" TERMINATOR,
-              s->background + BGDIFF);
+static i32 apply_color(FILE *stream, struct style *s) {
+  i32 written_bytes = 0;
+
+  written_bytes += fprintf(stream ? stream : stdout, 
+      ESC SEPARATOR "%u" TERMINATOR, s->foreground);
+  written_bytes += fprintf(stream ? stream : stdout, 
+      ESC SEPARATOR "%u" TERMINATOR, s->background + BGDIFF);
 
   return written_bytes;
 }
 
-static int apply_effects(FILE *stream, struct style *s) {
-  int written_bytes = 0;
+static i32 apply_effects(FILE *stream, struct style *s) {
+  i32 written_bytes = 0;
 
-  int totalbits = sizeof(s->effects) * CHAR_BIT;
-  for (int i = 0; i < totalbits; i++) {
+  u64 totalbits = sizeof(s->effects) * CHAR_BIT;
+  for (u64 i = 0; i < totalbits; i++) {
     if (GETBIT(s->effects, i)) {
       switch (i) {
         case _BOLD:
           written_bytes += fprintf(stream ? stream : stdout,
-                                   ESC SEPARATOR "%u" TERMINATOR, _BOLD + 1);
+              ESC SEPARATOR "%u" TERMINATOR, _BOLD + 1);
           break;
         case _DIM:
           written_bytes += fprintf(stream ? stream : stdout,
-                                   ESC SEPARATOR "%u" TERMINATOR, _DIM + 1);
+              ESC SEPARATOR "%u" TERMINATOR, _DIM + 1);
           break;
         case _ITALIC:
           written_bytes += fprintf(stream ? stream : stdout,
-                                   ESC SEPARATOR "%u" TERMINATOR, _ITALIC + 1);
+              ESC SEPARATOR "%u" TERMINATOR, _ITALIC + 1);
           break;
         case _UNDERLINE:
-          written_bytes +=
-              fprintf(stream ? stream : stdout, ESC SEPARATOR "%u" TERMINATOR,
-                      _UNDERLINE + 1);
+          written_bytes += fprintf(stream ? stream : stdout,
+              ESC SEPARATOR "%u" TERMINATOR, _UNDERLINE + 1);
           break;
         case _BLINKING:
-          written_bytes +=
-              fprintf(stream ? stream : stdout, ESC SEPARATOR "%u" TERMINATOR,
-                      _BLINKING + 1);
+          written_bytes += fprintf(stream ? stream : stdout,
+              ESC SEPARATOR "%u" TERMINATOR, _BLINKING + 1);
           break;
         case _REVERSE:
           written_bytes += fprintf(stream ? stream : stdout,
-                                   ESC SEPARATOR "%u" TERMINATOR, _REVERSE + 2);
+              ESC SEPARATOR "%u" TERMINATOR, _REVERSE + 2);
           break;
         case _HIDDEN:
           written_bytes += fprintf(stream ? stream : stdout,
-                                   ESC SEPARATOR "%u" TERMINATOR, _HIDDEN + 2);
+              ESC SEPARATOR "%u" TERMINATOR, _HIDDEN + 2);
           break;
         case _CROSSOUT:
-          written_bytes +=
-              fprintf(stream ? stream : stdout, ESC SEPARATOR "%u" TERMINATOR,
-                      _CROSSOUT + 2);
+          written_bytes += fprintf(stream ? stream : stdout, 
+              ESC SEPARATOR "%u" TERMINATOR, _CROSSOUT + 2);
           break;
       }
     }
@@ -79,11 +77,11 @@ static int apply_effects(FILE *stream, struct style *s) {
   return written_bytes;
 }
 
-int printfc(struct style *s, const char *fmt, ...) {
+i32 printfc(struct style *s, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
 
-  int written_bytes = 0;
+  i32 written_bytes = 0;
   written_bytes += apply_color(NULL, s);
   written_bytes += apply_effects(NULL, s);
   written_bytes += vprintf(fmt, args);
@@ -93,11 +91,11 @@ int printfc(struct style *s, const char *fmt, ...) {
   return written_bytes;
 }
 
-int fprintfc(FILE *stream, struct style *s, const char *fmt, ...) {
+i32 fprintfc(FILE *stream, struct style *s, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
 
-  int written_bytes = 0;
+  i32 written_bytes = 0;
   written_bytes += apply_color(stream, s);
   written_bytes += apply_effects(stream, s);
   written_bytes += vfprintf(stream, fmt, args);

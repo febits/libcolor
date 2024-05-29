@@ -3,6 +3,12 @@
 
 #include "color.h"
 
+#define ESC "\x1b"
+#define SEPARATOR "["
+#define TERMINATOR "m"
+#define RESET_VALUE "0"
+#define OFF ESC SEPARATOR RESET_VALUE TERMINATOR
+
 #define MSG "\tHello, I'm Felipe!\n"
 
 int main(void) {

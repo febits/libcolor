@@ -34,10 +34,12 @@ run_samples:
 install: $(LIB)
 	cp $(LIB) $(INSTALLDIR)
 	cp include/color.h /usr/include
+	cp include/types.h /usr/include/
 
 uninstall:
 	rm $(INSTALLDIR)/$(LIBNAME)
 	rm /usr/include/color.h
+	rm /usr/include/types.h
 
 clean:
 	rm -rf $(BUILDDIR) $(SAMPLE)
