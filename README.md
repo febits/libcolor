@@ -41,9 +41,9 @@ int fprintfc(FILE *stream, struct style *s, const char *fmt, ...)
 The `printfc` and `fprintfc` takes one especial argument: `struct style`
 ```c
 typedef struct style {
-  uint8_t foreground;
-  uint8_t background;
-  uint8_t effects;
+  u8 foreground;
+  u8 background;
+  u8 effects;
 } Style;
 ```
 
