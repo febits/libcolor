@@ -15,7 +15,8 @@
 #define FGDEFAULT 39
 #define BGDEFAULT 49
 
-#define DEFAULT(type) ((type) == FG ? FGDEFAULT : BGDEFAULT)
+#define _DC(type) ((type) == FG ? FGDEFAULT : BGDEFAULT)
+#define STYLE_C(f, b, e) ((struct style){(f), (b), (e)})
 
 #define BOLD (1 << 0)
 #define DIM (1 << 1)
@@ -53,10 +54,10 @@ typedef struct style {
   u8 effects;
 } Style;
 
-i32 printfc(struct style *s, const char *fmt, ...)
+i32 printfc(struct style s, const char *fmt, ...)
     __attribute__((format(printf, 2, 3)));
 
-i32 fprintfc(FILE *stream, struct style *s, const char *fmt, ...)
+i32 fprintfc(FILE *stream, struct style s, const char *fmt, ...)
     __attribute__((format(printf, 3, 4)));
 
 #endif

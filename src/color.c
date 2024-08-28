@@ -77,13 +77,13 @@ static i32 apply_effects(FILE *stream, struct style *s) {
   return written_bytes;
 }
 
-i32 printfc(struct style *s, const char *fmt, ...) {
+i32 printfc(struct style s, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
 
   i32 written_bytes = 0;
-  written_bytes += apply_color(NULL, s);
-  written_bytes += apply_effects(NULL, s);
+  written_bytes += apply_color(NULL, &s);
+  written_bytes += apply_effects(NULL, &s);
   written_bytes += vprintf(fmt, args);
   written_bytes += printf(OFF);
 
@@ -91,13 +91,13 @@ i32 printfc(struct style *s, const char *fmt, ...) {
   return written_bytes;
 }
 
-i32 fprintfc(FILE *stream, struct style *s, const char *fmt, ...) {
+i32 fprintfc(FILE *stream, struct style s, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
 
   i32 written_bytes = 0;
-  written_bytes += apply_color(stream, s);
-  written_bytes += apply_effects(stream, s);
+  written_bytes += apply_color(stream, &s);
+  written_bytes += apply_effects(stream, &s);
   written_bytes += vfprintf(stream, fmt, args);
   written_bytes += fprintf(stream, OFF);
 

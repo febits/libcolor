@@ -29,12 +29,12 @@ After the installation, you'll be able to access the `"color.h"` that lives in `
 
 The main header file `color.h` exposes two functions: `printfc` and `fprintfc`
 ```c
-int printfc(struct style *s, const char *fmt, ...)
+int printfc(struct style s, const char *fmt, ...)
     __attribute__((format(printf, 2, 3)));
 ```
 
 ```c
-int fprintfc(FILE *stream, struct style *s, const char *fmt, ...)
+int fprintfc(FILE *stream, struct style s, const char *fmt, ...)
     __attribute__((format(printf, 3, 4)));
 ```
 
@@ -64,10 +64,14 @@ BRIGHT_BLACK, BRIGHT_RED, BRIGHT_GREEN, BRIGHT_YELLOW,
 BRIGHT_BLUE, BRIGHT_MAGENTA, BRIGHT_CYAN, BRIGHT_WHITE.
 ```
 
-If you want to keep `foreground` or `background` as their default value, use `DEFAULT(type)` macro. It takes the type of color: `FG` or `BG`. In other words, you must pass `DEFAULT(type)` as the values. Notice that you also can specify the effects as default (none) by putting `0`.
+If you want to keep `foreground` or `background` as their default value, use `_DC(type)` macro. It takes the type of color: `FG` or `BG`. In other words, you must pass `_DC(type)` as the values. Notice that you also can specify the effects as default (none) by putting `0`.
 
 ```c
-struct style s = {DEFAULT(FG), DEFAULT(BG), 0};
+enum default_type { FG, BG };
+```
+
+```c
+struct style s = {_DC(FG), _DC(BG), 0};
 ```
 
 The field `effects` is a classical bit vector that you can merge the available values with `OR` operator:
@@ -90,11 +94,10 @@ Let's suppose that you want a yellow foreground with bold, italic and cross-out:
 int main() {
     struct style s = {YELLOW, DEFAULT(BG), BOLD | ITALIC | CROSSOUT};
 
-    printfc(&s, "POTATO BANANA %s\n", "ORANGE");
+    printfc(s, "POTATO BANANA %s\n", "ORANGE");
 
     return 0;
 }
-
 ```
 
 With `fprintfc`:
@@ -108,9 +111,26 @@ int main() {
     struct style s = {YELLOW, DEFAULT(BG), BOLD | ITALIC | CROSSOUT};
     FILE *f = fopen("/tmp/libcolor.tst", "w");
 
-    fprintfc(f, &s, "POTATO BANANA %s\n", "ORANGE");
+    fprintfc(f, s, "POTATO BANANA %s\n", "ORANGE");
 
     return 0;
+}
+```
+
+You can also use the available macro `STYLE_C`:
+
+```c
+#define STYLE_C(f, b, e) ((struct style){(f), (b), (e)})
+```
+
+```c
+#include <color.h>
+
+int main(void) {
+  printfc(STYLE_C(YELLOW, _DC(BG), BOLD | ITALIC | CROSSOUT),
+          "POTATO BANANA %s\n", "ORANGE");
+
+  return 0;
 }
 ```
 
