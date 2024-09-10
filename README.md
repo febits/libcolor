@@ -92,7 +92,7 @@ Let's suppose that you want a yellow foreground with bold, italic and cross-out:
 #include <color.h>
 
 int main() {
-    struct style s = {YELLOW, DEFAULT(BG), BOLD | ITALIC | CROSSOUT};
+    struct style s = {YELLOW, _DC(BG), BOLD | ITALIC | CROSSOUT};
 
     printfc(s, "POTATO BANANA %s\n", "ORANGE");
 
@@ -108,7 +108,7 @@ With `fprintfc`:
 #include <color.h>
 
 int main() {
-    struct style s = {YELLOW, DEFAULT(BG), BOLD | ITALIC | CROSSOUT};
+    struct style s = {YELLOW, _DC(BG), BOLD | ITALIC | CROSSOUT};
     FILE *f = fopen("/tmp/libcolor.tst", "w");
 
     fprintfc(f, s, "POTATO BANANA %s\n", "ORANGE");
