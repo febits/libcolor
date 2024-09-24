@@ -4,8 +4,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "types.h"
-
 #define ESC "\x1b"
 #define SEPARATOR "["
 #define TERMINATOR "m"
@@ -49,15 +47,15 @@ enum colors {
 };
 
 typedef struct style {
-  u8 foreground;
-  u8 background;
-  u8 effects;
+  uint8_t foreground;
+  uint8_t background;
+  uint8_t effects;
 } Style;
 
-i32 printfc(struct style s, const char *fmt, ...)
+int printfc(struct style s, const char *fmt, ...)
     __attribute__((format(printf, 2, 3)));
 
-i32 fprintfc(FILE *stream, struct style s, const char *fmt, ...)
+int fprintfc(FILE *stream, struct style s, const char *fmt, ...)
     __attribute__((format(printf, 3, 4)));
 
 #endif
