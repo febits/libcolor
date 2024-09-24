@@ -7,6 +7,7 @@ CFLAGS+=$(CINCLUDE)
 BASENAME=color
 BUILDDIR=build
 INSTALLDIR=/usr/lib
+LIBHEADER=color.h
 
 SRC=src/$(BASENAME).c
 LIBNAME=lib$(BASENAME).so
@@ -33,13 +34,11 @@ run_samples:
 
 install: $(LIB)
 	cp $(LIB) $(INSTALLDIR)
-	cp include/color.h /usr/include
-	cp include/types.h /usr/include/
+	cp include/$(LIBHEADER) /usr/include
 
 uninstall:
 	rm $(INSTALLDIR)/$(LIBNAME)
-	rm /usr/include/color.h
-	rm /usr/include/types.h
+	rm /usr/include/$(LIBHEADER)
 
 clean:
 	rm -rf $(BUILDDIR) $(SAMPLE)

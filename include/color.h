@@ -10,11 +10,7 @@
 #define RESET_VALUE "0"
 #define OFF ESC SEPARATOR RESET_VALUE TERMINATOR
 
-#define FGDEFAULT 39
-#define BGDEFAULT 49
-
-#define _DC(type) ((type) == FG ? FGDEFAULT : BGDEFAULT)
-#define STYLE_C(f, b, e) ((struct style){(f), (b), (e)})
+#define STYLE(f, b, e) ((struct style){(f), (b), (e)})
 
 #define BOLD (1 << 0)
 #define DIM (1 << 1)
@@ -24,8 +20,6 @@
 #define REVERSE (1 << 5)
 #define HIDDEN (1 << 6)
 #define CROSSOUT (1 << 7)
-
-enum default_type { FG, BG };
 
 enum colors {
   BLACK = 30,

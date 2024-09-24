@@ -1,11 +1,15 @@
 #include <limits.h>
 #include <stdarg.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "color.h"
 
+#define FGDEFAULT 39
+#define BGDEFAULT 49
 #define BGDIFF 10
+
 #define GETBIT(B, P) (((B) >> (P)) & 1)
 
 enum effects {
@@ -23,10 +27,13 @@ enum effects {
 static int apply_color(FILE *stream, struct style *s) {
   int written_bytes = 0;
 
+  uint8_t fore = s->foreground == 0 ? FGDEFAULT : s->foreground;
+  uint8_t back = s->background == 0 ? BGDEFAULT : s->background + BGDIFF;
+
   written_bytes += fprintf(stream ? stream : stdout, 
-      ESC SEPARATOR "%u" TERMINATOR, s->foreground);
-  written_bytes += fprintf(stream ? stream : stdout, 
-      ESC SEPARATOR "%u" TERMINATOR, s->background + BGDIFF);
+      ESC SEPARATOR "%u" TERMINATOR, fore);
+  written_bytes += fprintf(stream ? stream : stdout,
+      ESC SEPARATOR "%u" TERMINATOR, back);
 
   return written_bytes;
 }
@@ -82,6 +89,7 @@ int printfc(struct style s, const char *fmt, ...) {
   va_start(args, fmt);
 
   int written_bytes = 0;
+  written_bytes += printf(OFF);
   written_bytes += apply_color(NULL, &s);
   written_bytes += apply_effects(NULL, &s);
   written_bytes += vprintf(fmt, args);
@@ -96,6 +104,7 @@ int fprintfc(FILE *stream, struct style s, const char *fmt, ...) {
   va_start(args, fmt);
 
   int written_bytes = 0;
+  written_bytes += fprintf(stream, OFF);
   written_bytes += apply_color(stream, &s);
   written_bytes += apply_effects(stream, &s);
   written_bytes += vfprintf(stream, fmt, args);

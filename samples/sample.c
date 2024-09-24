@@ -3,64 +3,66 @@
 
 #include "color.h"
 
-#define MSG "\tHello, I'm Felipe!\n"
+#define MSG "Hello, I'm Felipe!\n"
 
 int main(void) {
-  printf(OFF "\nNormal Default Colors:\n");
-  printfc(STYLE_C(BLACK, _DC(BG), 0), MSG);
-  printfc(STYLE_C(RED, _DC(BG), 0), MSG);
-  printfc(STYLE_C(GREEN, _DC(BG), 0), MSG);
-  printfc(STYLE_C(YELLOW, _DC(BG), 0), MSG);
-  printfc(STYLE_C(BLUE, _DC(BG), 0), MSG);
-  printfc(STYLE_C(MAGENTA, _DC(BG), 0), MSG);
-  printfc(STYLE_C(CYAN, _DC(BG), 0), MSG);
-  printfc(STYLE_C(WHITE, _DC(BG), 0), MSG);
+  printf("\nNormal Default Colors:\n");
+  printfc(STYLE(BLACK, 0, 0), MSG);
+  printfc(STYLE(RED, 0, 0), MSG);
+  printfc(STYLE(GREEN, 0, 0), MSG);
+  printfc(STYLE(YELLOW, 0, 0), MSG);
+  printfc(STYLE(BLUE, 0, 0), MSG);
+  printfc(STYLE(MAGENTA, 0, 0), MSG);
+  printfc(STYLE(CYAN, 0, 0), MSG);
+  printfc(STYLE(WHITE, 0, 0), MSG);
 
-  printf(OFF "\nNormal Bright Colors:\n");
-  printfc(STYLE_C(BRIGHT_BLACK, _DC(BG), 0), MSG);
-  printfc(STYLE_C(BRIGHT_RED, _DC(BG), 0), MSG);
-  printfc(STYLE_C(BRIGHT_GREEN, _DC(BG), 0), MSG);
-  printfc(STYLE_C(BRIGHT_YELLOW, _DC(BG), 0), MSG);
-  printfc(STYLE_C(BRIGHT_BLUE, _DC(BG), 0), MSG);
-  printfc(STYLE_C(BRIGHT_MAGENTA, _DC(BG), 0), MSG);
-  printfc(STYLE_C(BRIGHT_CYAN, _DC(BG), 0), MSG);
-  printfc(STYLE_C(BRIGHT_WHITE, _DC(BG), 0), MSG);
+  printf("\nNormal Bright Colors:\n");
+  printfc(STYLE(BRIGHT_BLACK, 0, 0), MSG);
+  printfc(STYLE(BRIGHT_RED, 0, 0), MSG);
+  printfc(STYLE(BRIGHT_GREEN, 0, 0), MSG);
+  printfc(STYLE(BRIGHT_YELLOW, 0, 0), MSG);
+  printfc(STYLE(BRIGHT_BLUE, 0, 0), MSG);
+  printfc(STYLE(BRIGHT_MAGENTA, 0, 0), MSG);
+  printfc(STYLE(BRIGHT_CYAN, 0, 0), MSG);
+  printfc(STYLE(BRIGHT_WHITE, 0, 0), MSG);
 
-  printf(OFF "\nNormal Default Colors (Background):\n");
-  printfc(STYLE_C(_DC(FG), BLACK, 0), MSG);
-  printfc(STYLE_C(_DC(FG), RED, 0), MSG);
-  printfc(STYLE_C(_DC(FG), GREEN, 0), MSG);
-  printfc(STYLE_C(_DC(FG), YELLOW, 0), MSG);
-  printfc(STYLE_C(_DC(FG), BLUE, 0), MSG);
-  printfc(STYLE_C(_DC(FG), MAGENTA, 0), MSG);
-  printfc(STYLE_C(_DC(FG), CYAN, 0), MSG);
-  printfc(STYLE_C(_DC(FG), WHITE, 0), MSG);
+  printf("\nNormal Default Colors (Background):\n");
+  printfc(STYLE(0, BLACK, 0), MSG OFF);
+  printfc(STYLE(0, RED, 0), MSG OFF);
+  printfc(STYLE(0, GREEN, 0), MSG);
+  printfc(STYLE(0, YELLOW, 0), MSG);
+  printfc(STYLE(0, BLUE, 0), MSG);
+  printfc(STYLE(0, MAGENTA, 0), MSG);
+  printfc(STYLE(0, CYAN, 0), MSG);
+  printfc(STYLE(0, WHITE, 0), MSG);
 
-  printf(OFF "\nNormal Bright Colors (Background):\n");
-  printfc(STYLE_C(_DC(FG), BRIGHT_BLACK, 0), MSG);
-  printfc(STYLE_C(_DC(FG), BRIGHT_RED, 0), MSG);
-  printfc(STYLE_C(_DC(FG), BRIGHT_GREEN, 0), MSG);
-  printfc(STYLE_C(_DC(FG), BRIGHT_YELLOW, 0), MSG);
-  printfc(STYLE_C(_DC(FG), BRIGHT_BLUE, 0), MSG);
-  printfc(STYLE_C(_DC(FG), BRIGHT_MAGENTA, 0), MSG);
-  printfc(STYLE_C(_DC(FG), BRIGHT_CYAN, 0), MSG);
-  printfc(STYLE_C(_DC(FG), BRIGHT_WHITE, 0), MSG);
+  printf("\nNormal Bright Colors (Background):\n");
+  printfc(STYLE(0, BRIGHT_BLACK, 0), MSG);
+  printfc(STYLE(0, BRIGHT_RED, 0), MSG);
+  printfc(STYLE(0, BRIGHT_GREEN, 0), MSG);
+  printfc(STYLE(0, BRIGHT_YELLOW, 0), MSG);
+  printfc(STYLE(0, BRIGHT_BLUE, 0), MSG);
+  printfc(STYLE(0, BRIGHT_MAGENTA, 0), MSG);
+  printfc(STYLE(0, BRIGHT_CYAN, 0), MSG);
+  printfc(STYLE(0, BRIGHT_WHITE, 0), MSG);
 
-  printf(OFF "\nText Effects:\n");
-  printfc(STYLE_C(_DC(FG), _DC(BG), BOLD), "\tBOLD\t" MSG);
-  printfc(STYLE_C(_DC(FG), _DC(BG), DIM), "\tDIM\t" MSG);
-  printfc(STYLE_C(_DC(FG), _DC(BG), ITALIC), "\tITALIC\t" MSG);
-  printfc(STYLE_C(_DC(FG), _DC(BG), UNDERLINE), "\tUNDERLINE\t" MSG);
-  printfc(STYLE_C(_DC(FG), _DC(BG), BLINKING), "\tBLINKING\t" MSG);
-  printfc(STYLE_C(_DC(FG), _DC(BG), REVERSE), "\tREVERSE\t" MSG);
-  printfc(STYLE_C(_DC(FG), _DC(BG), HIDDEN), "\tHIDDEN\t" MSG);
-  printfc(STYLE_C(_DC(FG), _DC(BG), CROSSOUT), "\tCROSSOUT\t" MSG);
+  printf("\nText Effects:\n");
+  printfc(STYLE(0, 0, BOLD), "BOLD: " MSG);
+  printfc(STYLE(0, 0, DIM), "DIM: " MSG);
+  printfc(STYLE(0, 0, ITALIC), "ITALIC: " MSG);
+  printfc(STYLE(0, 0, UNDERLINE), "UNDERLINE: " MSG);
+  printfc(STYLE(0, 0, BLINKING), "BLINKING: " MSG);
+  printfc(STYLE(0, 0, REVERSE), "REVERSE: " MSG);
+  printfc(STYLE(0, 0, HIDDEN), "HIDDEN: " MSG);
+  printfc(STYLE(0, 0, CROSSOUT), "CROSSOUT: " MSG);
 
   FILE *f = fopen("/tmp/libcolor.tst", "w");
-  fprintfc(f, STYLE_C(YELLOW, BLACK, BOLD | UNDERLINE),
-           "Testing on STREAM...\n");
-  fprintfc(f, STYLE_C(BLUE, WHITE, CROSSOUT | ITALIC),
-           "Testing on STREAM 2...");
+  fprintfc(f, STYLE(YELLOW, BLACK, BOLD | UNDERLINE), "Testing on STREAM...\n");
+
+  fprintfc(f, STYLE(BLUE, WHITE, CROSSOUT | ITALIC),
+           "Testing on STREAM 2...\n");
+  fprintfc(f, STYLE(MAGENTA, CYAN, BLINKING | BOLD),
+           "Testing on STREAM 3...");
 
   return EXIT_SUCCESS;
 }
