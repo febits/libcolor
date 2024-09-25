@@ -46,10 +46,18 @@ typedef struct style {
   uint8_t effects;
 } Style;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int printfc(struct style s, const char *fmt, ...)
     __attribute__((format(printf, 2, 3)));
 
 int fprintfc(FILE *stream, struct style s, const char *fmt, ...)
     __attribute__((format(printf, 3, 4)));
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
