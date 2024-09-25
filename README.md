@@ -30,6 +30,7 @@ make samples
 ```bash
 make tests
 ```
+> Running tests will require [libcmocka](https://cmocka.org/)
 
 ## Usage
 

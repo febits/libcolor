@@ -31,34 +31,37 @@ static void test_foreground_color(void **state) {
   char buf[FOREGROUND_BUFSIZE + 1] = {0};
   FILE *f = *state;
 
-  fprintfc(f, STYLE(RED, 0, 0), "TESTING");
+  int written_bytes = fprintfc(f, STYLE(RED, 0, 0), "TESTING");
 
   fseek(f, 0, SEEK_SET);
   fread(buf, sizeof(char), 25, f);
   assert_string_equal(buf, "\x1b[0m\x1b[31m\x1b[49mTESTING\x1b[0m");
+  assert_int_equal(written_bytes, FOREGROUND_BUFSIZE);
 }
 
 static void test_background_color(void **state) {
   char buf[BACKGROUND_BUFSIZE + 1] = {0};
   FILE *f = *state;
 
-  fprintfc(f, STYLE(0, MAGENTA, 0), "TESTING");
+  int written_bytes = fprintfc(f, STYLE(0, MAGENTA, 0), "TESTING");
 
   fseek(f, 0, SEEK_SET);
   fread(buf, sizeof(char), 25, f);
   assert_string_equal(buf, "\x1b[0m\x1b[39m\x1b[45mTESTING\x1b[0m");
+  assert_int_equal(written_bytes, BACKGROUND_BUFSIZE);
 }
 
 static void test_effects(void **state) {
   char buf[EFFECTS_BUFSIZE + 1] = {0};
   FILE *f = *state;
 
-  fprintfc(f, STYLE(0, 0, ITALIC | BOLD), "TESTING");
+  int written_bytes = fprintfc(f, STYLE(0, 0, ITALIC | BOLD), "TESTING");
 
   fseek(f, 0, SEEK_SET);
   fread(buf, sizeof(char), 33, f);
   assert_string_equal(buf,
                       "\x1b[0m\x1b[39m\x1b[49m\x1b[1m\x1b[3mTESTING\x1b[0m");
+  assert_int_equal(written_bytes, EFFECTS_BUFSIZE);
 }
 
 int main(void) {
