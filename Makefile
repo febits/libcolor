@@ -1,36 +1,42 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -pedantic
+CFLAGS=-Wall -Wextra -pedantic -I./include/
 LDFLAGS=-L./build/ -lcolor
-CINCLUDE=-I./include/
-CFLAGS+=$(CINCLUDE)
 
-BASENAME=color
 BUILDDIR=build
 INSTALLDIR=/usr/lib
+LIBNAME=libcolor.so
 LIBHEADER=color.h
 
-SRC=src/$(BASENAME).c
-LIBNAME=lib$(BASENAME).so
+SRC=$(wildcard src/*.c)
 LIB=$(BUILDDIR)/$(LIBNAME)
 
-SAMPLE=samples/sample
+SRC_SAMPLE=$(wildcard samples/*.c)
+BIN_SAMPLE=$(BUILDDIR)/sample
 
-.PHONY: default samples run_samples install uninstall clean
+SRC_TEST=$(wildcard tests/*.c)
+BIN_TEST=$(BUILDDIR)/test_libcolor
 
-default: $(LIB)
-all: $(LIB) samples
+.PHONY: default tests samples install uninstall clean
+
+default: always $(LIB) $(BIN_SAMPLE) $(BIN_TEST)
 
 $(LIB): $(SRC)
+	$(CC) $(CFLAGS) -shared -fPIC $^ -o $@
+
+$(BIN_SAMPLE): $(SRC_SAMPLE)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+$(BIN_TEST): $(SRC_TEST)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) -lcmocka
+
+samples:
+	LD_LIBRARY_PATH=$(BUILDDIR) $(BIN_SAMPLE)
+
+tests:
+	LD_LIBRARY_PATH=$(BUILDDIR) $(BIN_TEST)
+
+always:
 	mkdir -p $(BUILDDIR)
-	$(CC) $(CFLAGS) -shared -fPIC $< -o $@
-
-$(SAMPLE): $(SAMPLE).c
-	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
-
-samples: $(SAMPLE)
-
-run_samples:
-	LD_LIBRARY_PATH=$(BUILDDIR) $(SAMPLE)
 
 install: $(LIB)
 	cp $(LIB) $(INSTALLDIR)
@@ -41,4 +47,4 @@ uninstall:
 	rm /usr/include/$(LIBHEADER)
 
 clean:
-	rm -rf $(BUILDDIR) $(SAMPLE)
+	rm -rf $(BUILDDIR)
