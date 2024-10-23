@@ -1,6 +1,6 @@
 # libcolor
 
-libcolor is designed to be a library that gives an easy-to-use interface for printing different colors and styles.
+libcolor is designed to be a library that provides an easy-to-use interface for printing in different colors and styles.
 
 Supported:
 - 4-bit colors
@@ -47,7 +47,7 @@ int fprintfc(FILE *stream, struct style s, const char *fmt, ...)
     __attribute__((format(printf, 3, 4)));
 ```
 
-The `printfc` and `fprintfc` takes one especial argument: `struct style`
+The `printfc` and `fprintfc` take one especial argument: `struct style`
 ```c
 typedef struct style {
   uint8_t foreground;
@@ -56,11 +56,9 @@ typedef struct style {
 } Style;
 ```
 
-The `fprintfc` also takes the specific `STREAM` which is a `FILE *`.
+The `fprintfc` also takes the specific `STREAM`, which is a `FILE *`.
 
-Basically, all you need is fill up the members of that struct and pass through to `printfc`.
-
-The `foreground` and `background` members support the following `enum` values which are in `color.h`:
+The `foreground` and `background` members support the following `enum` values, which are in `color.h`:
 
 Normal ones:
 ```
@@ -73,21 +71,17 @@ BRIGHT_BLACK, BRIGHT_RED, BRIGHT_GREEN, BRIGHT_YELLOW,
 BRIGHT_BLUE, BRIGHT_MAGENTA, BRIGHT_CYAN, BRIGHT_WHITE.
 ```
 
-The field `effects` is a classical bit vector that you can merge the available values with `OR` operator:
-- **BOLD**
+The field `effects` is a classical bit vector, and you can merge the available values using the `OR` operator:
+- BOLD
 - DIM
-- *ITALIC*
-- <u>UNDERLINE</u>
-- <blink>BLINKING</blink>
+- ITALIC
+- UNDERLINE
+- BLINKING
 - REVERSE
 - HIDDEN
-- ~~CROSSOUT~~
+- CROSSOUT
 
 Let's suppose that you want a yellow foreground with bold, italic and cross-out:
-
-```c
-#define STYLE(f, b, e) ((struct style){(f), (b), (e)})
-```
 
 ```c
 #include <color.h>
@@ -98,6 +92,11 @@ int main(void) {
 
   return 0;
 }
+```
+
+That macro `STYLE(f, b, e)` is defined in `color.h`:
+```c
+#define STYLE(f, b, e) ((struct style){(f), (b), (e)})
 ```
 
 > [!NOTE]
