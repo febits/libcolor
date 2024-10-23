@@ -21,7 +21,7 @@ BIN_TEST=$(BUILDDIR)/test_libcolor
 default: always $(LIB) $(BIN_SAMPLE) $(BIN_TEST)
 
 $(LIB): $(SRC)
-	$(CC) $(CFLAGS) -shared -fPIC $^ -o $@
+	$(CC) $(CFLAGS) -shared -fPIC -O2 $^ -o $@
 
 $(BIN_SAMPLE): $(SRC_SAMPLE)
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
